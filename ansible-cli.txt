@@ -1,0 +1,4 @@
+$ ansible-playbook  --syntax-check -i hosts k8s-prep.yml
+
+playbook: k8s-prep.yml
+
