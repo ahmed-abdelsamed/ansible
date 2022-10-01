@@ -1,0 +1,28 @@
+### Generate SSH keys:
+
+$ ssh-keygen -t rsa -b 4096 -N ''
+
+
+### Create SSH client configuration file
+
+$ vim ~/.ssh/config
+Host *
+    UserKnownHostsFile /dev/null
+    StrictHostKeyChecking no
+    IdentitiesOnly yes
+    ConnectTimeout 0
+    ServerAliveInterval 30
+    
+ 
+ ### Copy SSH keys to all Kubernetes cluster nodes
+
+# Master Nodes
+for host in k8s-master-0{1..3}; do
+  ssh-copy-id root@$host
+done
+
+# Worker Nodes
+for host in k8s-worker-0{1..4}; do
+  ssh-copy-id root@$host
+done
+
