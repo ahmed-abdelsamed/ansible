@@ -30,8 +30,15 @@ ansible [core 2.11.5]
   python version = 3.9.7 (default, Aug 30 2021, 00:00:00) [GCC 11.2.1 20210728 (Red Hat 11.2.1-1)]
   jinja version = 3.0.1
   libyaml = True
-  =================================================================================================
-   ### Download and Install Python 3.9 Manually
+=================================================================================================
+### Install Python 3.9 on Rocky Linux 8 / AlmaLinux 8
+sudo dnf  -y update
+sudo reboot
+sudo dnf install python39
+$ python3.9 --version
+Python 3.9.7
+-------------------------------
+### Download and Install Python 3.9 Manually
 sudo dnf groupinstall "Development Tools" -y
 sudo dnf install openssl-devel libffi-devel bzip2-devel -y
 
@@ -148,7 +155,4 @@ eval $(register-python-argcomplete ansible-inventory)
 eval $(register-python-argcomplete ansible-playbook)
 eval $(register-python-argcomplete ansible-pull)
 eval $(register-python-argcomplete ansible-vault)
-
-============================================================
-  
-  ===================================================================================================
+=====================================================
