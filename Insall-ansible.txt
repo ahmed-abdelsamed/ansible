@@ -30,3 +30,125 @@ ansible [core 2.11.5]
   python version = 3.9.7 (default, Aug 30 2021, 00:00:00) [GCC 11.2.1 20210728 (Red Hat 11.2.1-1)]
   jinja version = 3.0.1
   libyaml = True
+  =================================================================================================
+   ### Download and Install Python 3.9 Manually
+sudo dnf groupinstall "Development Tools" -y
+sudo dnf install openssl-devel libffi-devel bzip2-devel -y
+
+$ gcc --version
+
+## Download latest Python 3.9 Archive
+Using wget command, download Python 3.9 latest release to install:
+
+sudo dnf install wget -y
+wget https://www.python.org/ftp/python/3.9.13/Python-3.9.13.tar.xz
+
+tar xvf Python-3.9*.tar.xz
+Change to the directory that was created during the file extraction:
+
+cd Python-3.9*/
+
+
+##Install Python 3.9 on Rocky Linux 8 / AlmaLinux 8
+To setup Python installation, use the command below:
+
+./configure --enable-optimizations
+
+sudo make altinstall
+
+$ python3.9 --version
+Python 3.9.13
+
+# OR
+$ /usr/local/bin/python3.9 --version
+Python 3.9.13
+
+$ pip3.9 --version
+pip 21.2.3 from /usr/local/lib/python3.9/site-packages/pip (python 3.9)
+
+
+###Install Python 3.9 Modules on Rocky Linux 8 / AlmaLinux 8
+python3.9 -m pip install <module>
+
+
+------------------------------------------------------
+{https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html}
+### Ansible
+python3.9 -m pip -V
+
+#If you see an error like No module named pip
+curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
+python3.9 get-pip.py --user
+
+
+Installing Ansible:
+python3.9 -m pip install --user ansible
+
+#Alternately, you can install a specific version of ansible-core in this Python environment:
+
+python3.9 -m pip install --user ansible-core==2.12.3
+
+
+#Upgrading Ansible:
+
+python3.9 -m pip install --upgrade --user ansible
+
+ansible --version
+
+python3.9 -m pip show ansible
+
+============================================
+### Installing devel from GitHub with pip
+
+python3.9 -m pip install --user https://github.com/ansible/ansible/archive/devel.tar.gz
+
+git clone https://github.com/ansible/ansible.git
+cd ./ansible
+
+## Setup the Ansible environment
+source ./hacking/env-setup
+
+#To suppress spurious warnings/errors, use -q
+
+source ./hacking/env-setup -q
+
+#Install Python dependencies
+
+python3.9 -m pip install --user -r ./requirements.txt
+
+
+## Update the devel branch of ansible-core on your local machine
+
+Use pull-with-rebase so any local changes are replayed.
+
+git pull --rebase
+
+### Adding Ansible command shell completion:
+
+python3.9 -m pip install --user argcomplete
+
+##Configuring argcomplete:
+There are 2 ways to configure argcomplete to allow shell completion of the Ansible command line utilities: globally or per command.
+
+#Global configuration:
+#Global completion requires bash 4.2.
+
+$activate-global-python-argcomplete
+
+
+##Per command configuration:
+If you do not have bash 4.2, you must register each script independently.
+
+eval $(register-python-argcomplete ansible)
+eval $(register-python-argcomplete ansible-config)
+eval $(register-python-argcomplete ansible-console)
+eval $(register-python-argcomplete ansible-doc)
+eval $(register-python-argcomplete ansible-galaxy)
+eval $(register-python-argcomplete ansible-inventory)
+eval $(register-python-argcomplete ansible-playbook)
+eval $(register-python-argcomplete ansible-pull)
+eval $(register-python-argcomplete ansible-vault)
+
+============================================================
+  
+  ===================================================================================================
