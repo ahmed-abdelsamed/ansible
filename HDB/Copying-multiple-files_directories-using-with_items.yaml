@@ -1,0 +1,15 @@
+#If you have multiple files to be copied, then you can iterate over them using with_items.
+#
+#The following example will copy multiple files given as a list of the home directory.
+#
+
+
+hosts: blocks
+  tasks:
+  - name: Ansible copy multiple files with_items
+    copy:
+      src: ~/{{item}}
+      dest: /tmp
+      mode: 0774
+    with_items:
+      ['hello1','hello2','hello3','sub_folder/hello4']

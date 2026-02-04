@@ -1,0 +1,6 @@
+---
+- name:  execute a script.
+  hosts: date
+  user: root
+  tasks:
+  - script: /etc/ansible/script.sh

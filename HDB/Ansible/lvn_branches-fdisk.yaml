@@ -1,0 +1,7 @@
+- hosts: mod
+  user: root
+  tasks:
+    - parted: null
+      device: /dev/sdb
+      number: 1
+      state: present

@@ -1,0 +1,14 @@
+---
+- hosts: 86
+  become: yes
+  become_user: root 
+ 
+  tasks:
+
+    - name: Add the users in items  with a bash shell, appending the group 'admins' and 'developers' to the user's groups
+      group:
+        name: "{{ item }}"
+        state: present
+      with_items:
+        - maf
+	- rar

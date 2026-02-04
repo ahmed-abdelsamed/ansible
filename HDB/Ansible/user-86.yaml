@@ -1,0 +1,18 @@
+---
+- hosts: m86
+  user: root
+
+#  vars:
+#    users:
+#      - username: galya
+#        use_sudo: no
+
+#      - username: kolya
+#        use_sudo: yes
+
+  tasks:
+  - include_vars: users.yml
+
+  - name: Add users | create users, shell, home dirs
+    user: name={{ item.username }} shell=/home/mainmenu.sh createhome=yes comment='create with ansible'
+    with_items: '{{users}}'         

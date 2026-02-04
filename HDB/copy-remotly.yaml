@@ -1,0 +1,7 @@
+- hosts: blocks
+  tasks:
+  - name: Ansible copy files remote to remote
+    copy:
+      src: /tmp/hello6
+      dest: /etc
+      remote_src: yes

@@ -1,0 +1,11 @@
+---
+- hosts: temp
+  tasks:
+    - name: Test task
+      file:
+        path: "/opt/disk1"
+        state: directory
+        owner: TRANS
+        group: other
+        mode: 0755
+      become: yes

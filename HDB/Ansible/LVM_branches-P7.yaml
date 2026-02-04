@@ -1,0 +1,23 @@
+- hosts: p7db
+  user: root
+  tasks:
+    - name: vgcreate
+      lvg:
+        vg: backup_vg
+        pvs: /dev/sdb1
+    - name: lvcreate
+      lvol:
+        vg: backup_vg
+        lv: db
+        size: +100%FREE
+    - name: create file system
+      filesystem:
+        fstype: xfs
+        dev: /dev/backup_vg/db
+    - name: mount logical volume
+      mount:
+        name: /db
+        src: /dev/backup_vg/db
+        fstype: xfs
+        state: mounted
+

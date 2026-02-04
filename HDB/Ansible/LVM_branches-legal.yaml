@@ -1,0 +1,22 @@
+- hosts: new
+  user: root
+  tasks:
+    - name: vgcreate
+      lvg:
+        vg: datavg
+        pvs: /dev/sdb1
+    - name: lvcreate
+      lvol:
+        vg: datavg
+        lv: u01
+        size: +100%FREE
+    - name: create file system
+      filesystem:
+        fstype: ext4
+        dev: /dev/datavg/u01
+    - name: mount logical volume
+      mount:
+        name: /u01
+        src: /dev/datavg/u01
+        fstype: ext4
+        state: mounted

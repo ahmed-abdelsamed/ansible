@@ -1,0 +1,5 @@
+---
+ - hosts: main
+   tasks:
+   - name: Ensure NFS is running
+     service: name=nfs state=restarted enabled=yes

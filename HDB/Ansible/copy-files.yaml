@@ -1,0 +1,5 @@
+- hosts: one
+  tasks:
+    - copy:
+        src: /storage/xparent/
+        dest: /media/xparent/

@@ -1,0 +1,7 @@
+---
+- hosts: webservers
+tasks:
+- name: Use ansible copy to create content in a remote server
+copy:
+content: "Hello Server!\n"
+dest: /tmp/hello.txt

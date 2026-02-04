@@ -1,0 +1,8 @@
+---
+
+- hosts: mod
+
+  tasks:
+    - name: Change the hostname to our standard
+      hostname:
+        name="{{ inventory_hostname }}"

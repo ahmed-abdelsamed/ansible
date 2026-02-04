@@ -1,0 +1,10 @@
+---
+- name: Transfer and execute a script.
+  hosts: new
+  user: root
+  tasks:
+     - name: Copy a "sudoers" file on the remote machine for editing
+       copy:
+         src:  /storage/data_collection/HDB17/etc_group.txt
+         dest: /tmp/data-collection/etc_group.txt
+         remote_src: yes

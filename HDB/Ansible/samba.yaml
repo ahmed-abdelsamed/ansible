@@ -1,0 +1,46 @@
+---
+- hosts: test
+
+  tasks:
+
+    - name: example copying file with owner and permissions
+      copy:
+       src: /etc/samba/smb.conf
+       dest: /etc/samba/smb.conf.bak
+       owner: root
+       group: root
+       mode: 0644
+
+    - name: Create smbgrp group
+      group: name=smbgrp system=yes state=present
+
+    - name: write the smb config file
+      template: src=templates/smb.conf.j2 dest=/etc/samba/smb.conf
+
+    - name: Create a login user
+      user:
+        name: lanshare
+        password: '$6$CidGHXuX1/cEwe7S$jmAgg2Y2DyjA5b2Dx3X4KBRSfcsQMYvp1//vHT1ouINnGd3pyZOljMiy5gCODks60qXrNO/p4bVm8zqdCs2wE.'
+        groups: smbgrp
+        state: present
+        shell: /bin/bash       # Defaults to /bin/bash
+        system: no             # Defaults to no
+        createhome: yes        # Defaults to yes
+        home: /home/lanshare
+
+
+    - name: example copying file with owner and permissions
+      copy:
+       src: /etc/ansible/script.sh
+       dest: /usr/bin/script-smb.sh
+       owner: root
+       group: root
+       mode: 0777
+
+    - name: executing the command in script.sh
+      shell: /usr/bin/script-smb.sh >> /tmp/somelog.txt
+
+    - service:
+       name: smb
+       state: restarted
+

@@ -1,0 +1,11 @@
+---
+- hosts: one
+  tasks:
+    - name: ensure that services are running
+      service: 
+        name: “{{ item }}”
+        state: started
+        enabled: yes
+
+      with_items:
+        - vsftpd

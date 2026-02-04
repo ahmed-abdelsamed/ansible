@@ -1,0 +1,7 @@
+---
+- name: Transfer and execute a script.
+  hosts: new
+  user: root
+  tasks:
+     - name: copy  files
+       copy: src=/tmp/data-collection/ dest=/storage/data_collection/HDB17/ remote_src=yes directory_mode=yes

@@ -1,0 +1,14 @@
+---
+ - hosts: main
+   vars:
+    - password: '$6$rounds=656000$/7q22d9sofmZM2MD$5Ys3Mk.JIz8toQE6OPZsaUvFQmOuAmB7v4t1NPICKfpUVSQqpUuv6gHZYdZM3ElIW1jrsd6G0UpFSaig1NhCY0'
+   tasks:
+     - user: name=siem password={{password}} groups=wheel  shell=/bin/bash append=yes
+       sudo: yes
+
+ - name: Allow 'wheel' group to have passwordless sudo
+   lineinfile:
+   dest=/etc/sudoers
+   state: present
+   regexp='^%wheel'
+   line: '%wheel ALL=(ALL) NOPASSWD: ALL'

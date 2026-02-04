@@ -1,0 +1,9 @@
+---
+- hosts: main
+
+  tasks:
+    - name: shutdown host
+      shell: sleep 10 && /sbin/shutdown  now
+      async: 300
+      poll: 0
+      become: true

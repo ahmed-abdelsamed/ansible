@@ -1,0 +1,33 @@
+---
+- hosts: main
+  become: yes
+  become_user: root 
+ 
+  tasks:
+ 
+    - name: Copy sudoers file for safety
+      command: cp -f /etc/sudoers /etc/sudoers.tmp
+ 
+    - name: Create sudoers file backup
+      command: cp -f /etc/sudoers /etc/sudoers.bak
+ 
+    - name: Create admins group
+      group: name=admins system=yes state=present
+ 
+    - name: make sure we can sudo as admin group
+      lineinfile: dest=/etc/sudoers.tmp state=present regexp='^%admins' line='%admins ALL=(ALL) NOPASSWD:ALL'
+ 
+    - name: also make sure ssh-agent works via sudo
+      lineinfile: dest=/etc/sudoers.tmp state=present regexp='^Defaults env_keep\+\=SSH_AUTH_SOCK' line='Defaults env_keep+=SSH_AUTH_SOCK'
+        
+    - name: Adding Multiple Users and Appending in Sudoers file
+      user: 
+       name: "{{ item }}"
+       groups: admins
+       append: yes
+       password: $6$rounds=656000$/7q22d9sofmZM2MD$5Ys3Mk.JIz8toQE6OPZsaUvFQmOuAmB7v4t1NPICKfpUVSQqpUuv6gHZYdZM3ElIW1jrsd6G0UpFSaig1NhCY0.
+      with_items:
+        - siem
+ 
+    - name: Final sudoers file check
+      shell: visudo -q -c -f /etc/sudoers.tmp && cp -f /etc/sudoers.tmp /etc/sudoers

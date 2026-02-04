@@ -1,0 +1,13 @@
+---
+users:
+  - username: maf 
+    use_sudo: no
+
+  - username: rar 
+    use_sudo: no
+
+  - username: mmn
+    use_sudo: no
+
+  - username: eha
+    use_sudo: no

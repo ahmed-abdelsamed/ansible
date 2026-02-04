@@ -1,0 +1,26 @@
+---
+  - hosts: mod
+   user: root
+   tasks:
+	- name: vgcreate
+	  lvg: 
+		vg: home_vg
+		pvs: /dev/sdb1
+
+	- name: lvcreate
+	  lvol:
+		vg: home_vg
+		lv: home
+		size: 55G
+
+	- name: create file system
+	  filesystem:
+		fstype: xfs	
+		dev: /dev/home_vg/home
+
+	- name: mount logical volume
+	  mount:
+		name: /home
+		src: /dev/home_vg/home
+		fstype: xfs
+		state: mounted

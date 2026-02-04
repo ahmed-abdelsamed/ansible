@@ -1,0 +1,21 @@
+---
+- hosts: vmware
+  become: yes
+  become_user: root
+
+  tasks:
+  - name: ensure rsyslog is running (and enabled it at boot)
+    service: name=rsyslog state=started enabled=yes
+  - name: ensure auditd is running (and enabled it at boot)
+    service: name=auditd state=started enabled=yes
+  - name: write the rsyslog config file
+    template: src=templates/rsyslog.conf.j2 dest=/etc/rsyslog.conf
+  - name: write the syslog config file
+    template: src=templates/syslog.conf.j2 dest=/etc/audisp/plugins.d/syslog.conf
+    notify:
+    - restart rsyslog
+  handlers:
+  - name: restart rsyslog
+    service: name=rsyslog state=restarted
+  - name: restart auditd
+    service: name=auditd state=restarted

@@ -1,0 +1,30 @@
+---
+- hosts: test
+
+  tasks:    
+    - name: example copying file with owner and permissions
+      copy:
+       src: /etc/exports
+       dest: /etc/exports.bak
+       owner: root
+       group: root
+       mode: 0644
+
+    - name: copy /etc/exports
+      template: src=templates/exports.j2 dest=/etc/exports owner=root group=root
+
+    - name: example copying file with owner and permissions
+      copy:
+       src: /etc/ansible/script-nfs.sh
+       dest: /usr/bin/script-nfs.sh
+       owner: root
+       group: root
+       mode: 0777
+
+    - name: executing the command in script.sh
+      shell: /usr/bin/script-nfs.sh >> /tmp/somelog.txt
+
+    - service:
+       name: nfs
+       state: restarted
+

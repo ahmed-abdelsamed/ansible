@@ -1,0 +1,59 @@
+- hosts: one
+  user: root
+  tasks:
+    - name: vgcreate
+      lvg:
+        vg: home_vg
+        pvs: /dev/sdb1
+    - name: lvcreate
+      lvol:
+        vg: home_vg
+        lv: home
+        size: +100%FREE
+    - name: create file system
+      filesystem:
+        fstype: xfs
+        dev: /dev/home_vg/home
+    - name: mount logical volume
+      mount:
+        name: /home
+        src: /dev/home_vg/home
+        fstype: xfs
+        state: mounted
+
+    - name: vgcreate
+      lvg:
+        vg: hdb_vg
+        pvs: /dev/sdc1
+    - name: lvcreate
+      lvol:
+        vg: hdb_vg
+        lv: backup
+        size: 300G
+    - name: create file system
+      filesystem:
+        fstype: xfs
+        dev: /dev/hdb_vg/backup
+    - name: mount logical volume
+      mount:
+        name: /opt/disk1
+        src: /dev/hdb_vg/backup
+        fstype: xfs
+        state: mounted
+    - name: lvcreate
+      lvol:
+        vg: hdb_vg
+        lv: home1
+        size: +100%FREE
+    - name: create file system
+      filesystem:
+        fstype: xfs
+        dev: /dev/hdb_vg/home1
+    - name: mount logical volume
+      mount:
+        name: /opt/disk2
+        src: /dev/hdb_vg/home1
+        fstype: xfs
+        state: mounted
+
+

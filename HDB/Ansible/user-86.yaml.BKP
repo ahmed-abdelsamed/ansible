@@ -1,0 +1,30 @@
+---
+- hosts: m86
+  tasks:
+    - name: Add the users in items
+      user:
+        name: "{{item}}"
+        shell: /home/mainmenu.sh
+        groups: "other"
+        append: yes 
+        #password: $2b$12$5nwObTTHrNDgO7Z.eK6V6elXcP8XnUkcTeIs45jr6J0Fy0VtkzcOO 
+      with_items:
+        - maf
+	- rar
+ 	- mmn
+	- eha
+	- maa
+	- mn1
+	- mn2
+	- tb2
+	- mn3
+	- mn4
+	- mn5
+	- kht
+	- ass
+	- aea
+	- ams
+	- tb3
+	- mn6
+	- ase
+	- mna

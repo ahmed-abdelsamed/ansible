@@ -1,0 +1,19 @@
+- name: Add Unix Admins users
+  user: name={{ item }} groups=wheel
+  with_items:
+    - siem
+
+- name: Make sure we have a 'wheel' group
+  group:
+    name: wheel
+    state=present
+
+- name: Allow 'wheel' group to have passwordless sudo
+  lineinfile:
+  dest=/etc/sudoers
+  state: present
+  regexp='^%wheel'
+  line: '%wheel ALL=(ALL) NOPASSWD: ALL'
+
+- name: Add sudoers users to wheel group
+  user: name=siem  groups=wheel append=yes state=present createhome=yes

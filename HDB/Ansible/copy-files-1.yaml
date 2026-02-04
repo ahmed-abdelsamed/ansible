@@ -1,0 +1,8 @@
+- hosts: one
+  gather_facts: no
+  vars:
+    src_path: "/storage/xparent/*"
+    des_path: "/media/xparent/"
+  tasks:
+  - name: Ansible copy files remote to remote
+    shell: 'cp -rp {{ src_path }} {{ des_path }}'

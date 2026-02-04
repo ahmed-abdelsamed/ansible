@@ -1,0 +1,22 @@
+- hosts: new
+  user: root
+  tasks:
+    - name: vgcreate
+      lvg:
+        vg: homevg
+        pvs: /dev/sdb1
+    - name: lvcreate
+      lvol:
+        vg: homevg
+        lv: home
+        size: +100%FREE
+    - name: create file system
+      filesystem:
+        fstype: xfs
+        dev: /dev/homevg/home
+    - name: mount logical volume
+      mount:
+        name: /home
+        src: /dev/homevg/home
+        fstype: xfs
+        state: mounted
